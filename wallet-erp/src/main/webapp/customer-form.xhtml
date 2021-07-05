@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+      
+<ui:composition template="layout.xhtml">
+    <ui:define name="content">
+        <h:form id="customerForm" enctype="multipart/form-data">
+            <p:panel header="Customer Details">
+                <h:panelGrid columns="2">
+                    <p:outputLabel for="name" value="Name: " />
+                    <p:inputText id="name" value="#{customerController.customer.name}" required="true"/>
+                    
+		            <p:outputLabel for="country" value="Country: "/>
+		            <p:selectOneMenu id="country" value="#{customerController.customer.country}" required="true">
+		            	<p:ajax listener="#{customerController.onCountryChange}" update="city"/>
+		                <f:selectItem itemLabel="Select your countrt" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{customerController.countriesGroup}"/>
+		            </p:selectOneMenu>
+                    
+                    <p:outputLabel for="city" value="City: " />
+                    <p:selectOneMenu id="city" value="#{customerController.customer.city}" required="true">
+		                <f:selectItem itemLabel="Select your city" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{customerController.cities}"/>
+		            </p:selectOneMenu>
+                    
+                    <p:outputLabel for="address" value="Address: " />
+                    <p:inputText id="address" value="#{customerController.customer.address}" required="true" />
+                    
+                    <p:outputLabel for="taxNumber" value="Tax Number: " />
+                    <p:inputText id="taxNumber" value="#{customerController.customer.taxNumber}" />
+                    
+					<p:outputLabel for="logo" value="Logo: " />
+					<p:fileUpload id="logo" value="#{customerController.customer.logo}" mode="simple" skinSimple="true" />
+					
+					<p:outputLabel for="active" value="Active: " />
+                    <h:selectOneRadio id="active" value = "#{customerController.customer.active}" required="true">
+						<f:selectItem itemValue="true" itemLabel="True"/>
+						<f:selectItem itemValue="false" itemLabel="False"/>
+					</h:selectOneRadio>
+					
+					<p:commandButton value="Save" ajax="false" action="#{customerController.saveCustomer}" 
+						styleClass="p-mt-3 ui-button-outlined p-d-block"/>
+                </h:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

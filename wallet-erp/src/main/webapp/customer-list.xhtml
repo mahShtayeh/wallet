@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+      
+<ui:composition template="layout.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel header="Customers List">
+                <p:dataTable id="table" var="customer" value="#{customerList.customers}">
+                    <p:column>
+                        <f:facet name="header">Name</f:facet>
+                        <h:outputText value="#{customer.name}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">Address</f:facet>
+                        <h:outputText value="#{customer.address}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">TaxNumber</f:facet>
+                        <h:outputText value="#{customer.taxNumber}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Country</f:facet>
+                        <h:outputText value="#{customer.country}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">City</f:facet>
+                        <h:outputText value="#{customer.city}" />
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">Active</f:facet>
+                        <h:outputText value="#{customer.active}" />
+                    </p:column>
+                    
+                    <p:column>
+	                    <div class="card">
+	                    	<f:facet name="header">Logo</f:facet>
+                        	<p:graphicImage width="150" height="100" 
+                        		library="images" name="#{customer.logoUri}" 
+                        		rendered="#{not empty customer.logoUri}" /> 
+	                    </div>
+                    </p:column>
+                    
+                    <p:column>
+	                    <h:commandButton 
+		                    value="Edit" 
+		                    action="#{customerList.editCustomer(customer)}" 
+							styleClass="p-mt-3 ui-button-outlined p-d-block" />
+							
+						<p:commandButton 
+		                    title="Delete" 
+		                    ajax="false" 
+		                    actionListener="#{customerList.deleteCustomer(customer)}" 
+							styleClass="p-mt-3 ui-button-outlined p-d-block"
+							ubdate=":form" />
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
